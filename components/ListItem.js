@@ -11,7 +11,6 @@ import {
 import {uploadsUrl} from '../utils/variables';
 
 const ListItem = ({singleMedia}) => {
-  console.log('singleMedia ' + singleMedia);
   /*
   if (singleMedia.thumbnails === undefined) {
     singleMedia.thumbnails = {w160: 'jokuoosote'};
