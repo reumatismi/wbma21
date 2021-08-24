@@ -12,7 +12,6 @@ const List = (props) => {
         const response = await fetch(url);
         const json = await response.json();
         setMediaArray(json);
-        console.log('List.js loadMedia: Success Asshole!');
       } catch (e) {
         console.log('List.js rivi 16: ', e.message);
       }
