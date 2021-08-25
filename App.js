@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, SafeAreaView, Platform } from "react-native";
-import List from "./components/List";
+import {StyleSheet, View, SafeAreaView, Platform} from 'react-native';
+import List from './components/List';
 
 const App = () => {
   return (

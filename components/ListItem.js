@@ -32,15 +32,15 @@ const styles = StyleSheet.create({
   },
   droidSafeArea: {
     flex: 1,
-    backgroundColor: '#ccc',
+    backgroundColor: 'gray',
     paddingTop: Platform.OS === 'android' ? 25 : 0,
   },
   row: {
     flexDirection: 'row',
     padding: 15,
     marginBottom: 5,
-    backgroundColor: 'pink',
-    borderRadius: 0,
+    backgroundColor: 'gray',
+    borderRadius: 5,
     flex: 1,
   },
   imagebox: {
@@ -48,11 +48,14 @@ const styles = StyleSheet.create({
   },
   textbox: {
     flex: 2,
-    padding: 10,
+    justifyContent: 'flex-start',
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
   },
   image: {
     flex: 1,
-    borderRadius: 3,
+    borderRadius: 25,
   },
   listtitle: {
     fontWeight: 'bold',
