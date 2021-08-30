@@ -25,9 +25,10 @@ const ListItem = ({singleMedia}) => {
     </TouchableOpacity>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     justifyContent: 'center',
   },
   droidSafeArea: {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15,
     marginBottom: 5,
-    backgroundColor: 'gray',
+    backgroundColor: 'grey',
     borderRadius: 5,
     flex: 1,
   },
