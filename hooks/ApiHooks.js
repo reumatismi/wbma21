@@ -22,7 +22,7 @@ const useMedia = () => {
       });
       return Promise.all(kaikkiTiedot);
     } catch (e) {
-      console.log('List.js - List: ', e.message());
+      console.log('List.js - List: ', e.message);
     }
   };
 
