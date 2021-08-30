@@ -10,12 +10,12 @@ import {
 } from 'react-native';
 import List from '../components/List';
 
-const Home = (props) => {
+const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.androidSafeArea}>
       <View style={styles.container}>
         <Text>Kakkapylly</Text>
-        <List />
+        <List navigation={navigation} />
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -30,13 +30,15 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 10,
   },
-  droidSafeArea: {
+  androidSafeArea: {
     flex: 1,
     backgroundColor: '#ccc',
     paddingTop: Platform.OS === 'android' ? 25 : 0,
   },
 });
 
-Home.propTypes = {};
+Home.propTypes = {
+  navigation: PropTypes.object,
+};
 
 export default Home;
