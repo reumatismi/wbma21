@@ -26,7 +26,7 @@ const StackScreen = () => {
     <Stack.Navigator>
       {isLoggedIn ? (
         <>
-          <Stack.Screen name="Home" component={TabScreen} />
+          <Stack.Screen name="Front" component={TabScreen} />
           <Stack.Screen name="Single" component={Single} />
         </>
       ) : (

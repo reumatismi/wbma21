@@ -38,4 +38,43 @@ const useMedia = () => {
   return {mediaArray, loadSingleMedia, loadMedia};
 };
 
-export {useMedia};
+const useLogin = () => {
+  const login = async (userCredentials) => {
+    const requestOptions = {
+      method: 'POST',
+      // mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: userCredentials,
+    };
+    try {
+      const loginResponse = await doFetch(baseUrl + 'login', requestOptions);
+      return loginResponse;
+    } catch (error) {
+      console.log('useLogin ', error);
+    }
+  };
+
+  return {login};
+};
+
+const useUser = () => {
+  const checkToken = async (token) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-access-token': token,
+      },
+    }
+    try {
+      const userInfo = doFetch(baseUrl + 'users/user', options);
+      return userInfo;
+    } catch (error) {
+      console.log('checkToken error ', error);
+    }
+  };
+  return {checkToken};
+};
+
+export {useMedia, useLogin, useUser};
