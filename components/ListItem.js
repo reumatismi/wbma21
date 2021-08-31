@@ -28,7 +28,7 @@ const ListItem = ({singleMedia}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: 'pink',
     justifyContent: 'center',
   },
   droidSafeArea: {
@@ -39,8 +39,10 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     padding: 15,
-    marginBottom: 5,
-    backgroundColor: 'grey',
+    paddingBottom: 20,
+    marginTop: 5,
+    marginBottom: 10,
+    backgroundColor: '#61627D',
     borderRadius: 5,
     flex: 1,
   },
@@ -53,10 +55,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 10,
+    color: '#A4A7D6',
   },
   image: {
     flex: 1,
-    borderRadius: 25,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
   },
   listtitle: {
     fontWeight: 'bold',

@@ -16,7 +16,9 @@ const image = {uri: 'http://placekitten.com/2041/1923'};
 const App = () => {
   return (
     <SafeAreaView style={styles.droidSafeArea}>
-      <StatusBar style="default" />
+      <StatusBar backgroundColor="pink">
+        <Text>Nappis</Text>
+      </StatusBar>
       <View style={styles.container}>
         <ImageBackground
           source={image}
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'black',
+    backgroundColor: '#121212',
   },
   headerImage: {
     paddingBottom: 10,
@@ -53,14 +55,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 10,
-    width: 200,
+    width: 220,
     bottom: 20,
     opacity: 0.6,
   },
   text: {
     fontSize: 20,
     color: 'white',
-    fontFamily: 'Optima-Italic',
   },
   droidSafeArea: {
     flex: 1,
@@ -75,9 +76,6 @@ const styles = StyleSheet.create({
     right: 20,
     zIndex: 2,
     color: 'white',
-  },
-  statusBar: {
-    backgroundColor: 'white',
   },
 });
 
