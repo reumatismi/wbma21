@@ -1,5 +1,12 @@
 import React, {useEffect, useContext} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  LoginForm,
+  RegisterForm,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,23 +16,6 @@ const Login = ({navigation}) => {
   const {setIsLoggedIn} = useContext(MainContext);
   const {login} = useLogin();
   const {checkToken} = useUser();
-
-  const doLogin = async () => {
-    try {
-      const loginInfo = await login(
-        JSON.stringify({
-          username: 'jon',
-          password: 'asukkipasukki2',
-        })
-      );
-      console.log('doLogin response ', loginInfo);
-      await AsyncStorage.setItem('userToken', loginInfo.token);
-      // TODO: Save user info to main context
-      setIsLoggedIn(true);
-    } catch (error) {
-      console.log('doLogin error ', error);
-    }
-  };
 
   const getToken = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
@@ -46,6 +36,8 @@ const Login = ({navigation}) => {
     <View style={styles.container}>
       <Text>Login</Text>
       <Button title="Sign in!" onPress={doLogin} />
+      <LoginForm navigation={navigation} />
+      <RegisterForm navigation={navigation} />
     </View>
   );
 };

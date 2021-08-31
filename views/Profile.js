@@ -3,6 +3,7 @@ import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
 import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RegisterForm from '../components/RegisterForm';
 
 const Profile = (props) => {
   const {isLoggedIn, setIsLoggedIn} = useContext(MainContext);
@@ -16,6 +17,7 @@ const Profile = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
+      <RegisterForm></RegisterForm>
       <Button title={'Logout'} onPress={logout} />
     </SafeAreaView>
   );

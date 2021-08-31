@@ -66,7 +66,7 @@ const useUser = () => {
       headers: {
         'x-access-token': token,
       },
-    }
+    };
     try {
       const userInfo = doFetch(baseUrl + 'users/user', options);
       return userInfo;
@@ -77,4 +77,22 @@ const useUser = () => {
   return {checkToken};
 };
 
-export {useMedia, useLogin, useUser};
+const useRegister = async (inputs) => {
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(inputs),
+  };
+  try {
+    const response = await fetch(baseUrl + 'users', fetchOptions);
+    const json = await response.json();
+    return json;
+  } catch (e) {
+    console.log('ApiHooks register', e.message);
+    return false;
+  }
+};
+
+export {useMedia, useLogin, useUser, useRegister};
