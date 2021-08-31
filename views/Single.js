@@ -16,7 +16,7 @@ const Single = ({route}) => {
       <Text style={styles.listdescription}>{params.description}</Text>
       <Text>{params.user_id}</Text>
       <Text>{params.time_added}</Text>
-      <Text>{format(new Date(params.time_added), 'MM/ss/yyyy')}</Text>
+      <Text>{format(new Date(params.time_added), 'EEEE dd.MM.yyyy')}</Text>
       <Text>{params.media_type}</Text>
     </SafeAreaView>
   );
