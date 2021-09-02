@@ -1,33 +1,29 @@
-import React, {useEffect, useContext} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  LoginForm,
-  RegisterForm,
-} from 'react-native';
+import React, {useContext, useEffect} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useLogin, useUser} from '../hooks/ApiHooks';
+import {useUser} from '../hooks/ApiHooks';
+import RegisterForm from '../components/RegisterForm';
+import LoginForm from '../components/LoginForm';
 
 const Login = ({navigation}) => {
   const {setIsLoggedIn} = useContext(MainContext);
-  const {login} = useLogin();
   const {checkToken} = useUser();
+  // console.log('Login isLoggedIn', isLoggedIn);
 
   const getToken = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
-    console.log('logIn asyncstorage token: ', userToken);
+    console.log('logIn asyncstorage token:', userToken);
     if (userToken) {
       const userInfo = await checkToken(userToken);
-      if (userInfo.user_id > 0) {
-        // TODO: save user into to maincontext
+      if (userInfo.user_id) {
+        // TODO: save user info to maincontext
         setIsLoggedIn(true);
       }
     }
   };
+
   useEffect(() => {
     getToken();
   }, []);
@@ -35,7 +31,7 @@ const Login = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text>Login</Text>
-      <Button title="Sign in!" onPress={doLogin} />
+
       <LoginForm navigation={navigation} />
       <RegisterForm navigation={navigation} />
     </View>

@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
 });
 
 Single.propTypes = {
-  navigation: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
 };
 

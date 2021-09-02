@@ -1,7 +1,6 @@
-import React, {handleInputChange} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Button, TextInput} from 'react-native';
-import Proptypes from 'prop-types';
+import {TextInput, StyleSheet} from 'react-native';
 
 const FormTextInput = ({style, ...otherProps}) => {
   return <TextInput style={[styles.textInput, style]} {...otherProps} />;
@@ -14,5 +13,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
+
+FormTextInput.propTypes = {
+  style: PropTypes.object,
+};
 
 export default FormTextInput;

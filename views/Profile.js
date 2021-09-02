@@ -11,7 +11,6 @@ const Profile = (props) => {
   const logout = async () => {
     setIsLoggedIn(false);
     await AsyncStorage.clear();
-    props.navigation.navigate('Login');
   };
 
   return (
