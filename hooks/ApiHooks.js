@@ -77,7 +77,7 @@ const useUser = () => {
   return {checkToken};
 };
 
-const useRegister = async (inputs) => {
+const register = async (inputs) => {
   const fetchOptions = {
     method: 'POST',
     headers: {
@@ -95,4 +95,4 @@ const useRegister = async (inputs) => {
   }
 };
 
-export {useMedia, useLogin, useUser, useRegister};
+export {useMedia, useLogin, useUser, register};
