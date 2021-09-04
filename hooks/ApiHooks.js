@@ -4,6 +4,7 @@ import {doFetch} from '../utils/http';
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
+
   useEffect(() => {
     (async () => {
       setMediaArray(await loadMedia());
@@ -14,15 +15,11 @@ const useMedia = () => {
     try {
       const mediaIlmanThumbNailia = await doFetch(baseUrl + 'media');
       const kaikkiTiedot = mediaIlmanThumbNailia.map(async (media) => {
-        try {
-          return await loadSingleMedia(media.file_id);
-        } catch (e) {
-          return {};
-        }
+        return await loadSingleMedia(media.file_id);
       });
       return Promise.all(kaikkiTiedot);
     } catch (e) {
-      console.log('List.js - loadMedia: ', e.message);
+      console.log('loadMedia', e.message);
     }
   };
 
@@ -31,11 +28,12 @@ const useMedia = () => {
       const tiedosto = await doFetch(baseUrl + 'media/' + id);
       return tiedosto;
     } catch (e) {
-      console.log('loadMedia' + e.message);
+      console.log('loadSingleMedia', e.message);
+      return {};
     }
   };
 
-  return {mediaArray, loadSingleMedia, loadMedia};
+  return {mediaArray, loadMedia, loadSingleMedia};
 };
 
 const useLogin = () => {
@@ -52,29 +50,10 @@ const useLogin = () => {
       const loginResponse = await doFetch(baseUrl + 'login', requestOptions);
       return loginResponse;
     } catch (error) {
-      console.log('useLogin ', error);
+      console.log('login error', error.message);
     }
   };
-
   return {login};
-};
-
-const useUser = () => {
-  const checkToken = async (token) => {
-    const options = {
-      method: 'GET',
-      headers: {
-        'x-access-token': token,
-      },
-    };
-    try {
-      const userInfo = doFetch(baseUrl + 'users/user', options);
-      return userInfo;
-    } catch (error) {
-      console.log('checkToken error ', error);
-    }
-  };
-  return {checkToken};
 };
 
 const register = async (inputs) => {
@@ -93,6 +72,24 @@ const register = async (inputs) => {
     console.log('ApiHooks register', e.message);
     return false;
   }
+};
+
+const useUser = () => {
+  const checkToken = async (token) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    try {
+      const userInfo = doFetch(baseUrl + 'users/user', options);
+      return userInfo;
+    } catch (error) {
+      console.log('checkToken error ', error);
+    }
+  };
+  return {checkToken};
 };
 
 export {useMedia, useLogin, useUser, register};

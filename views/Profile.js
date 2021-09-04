@@ -3,20 +3,22 @@ import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
 import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import RegisterForm from '../components/RegisterForm';
 
 const Profile = (props) => {
-  const {isLoggedIn, setIsLoggedIn} = useContext(MainContext);
+  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
   console.log('profile', isLoggedIn);
+  console.log('Nimi?', user.username);
   const logout = async () => {
     setIsLoggedIn(false);
     await AsyncStorage.clear();
+    props.navigation.navigate('Login');
   };
-
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Profile</Text>
-      <RegisterForm></RegisterForm>
+      <Text style={styles.text}>Profile</Text>
+      <Text style={styles.text}>Username: {user.username}</Text>
+      <Text style={styles.text}>Full name: {user.full_name}</Text>
+      <Text style={styles.text}>Email: {user.email}</Text>
       <Button title={'Logout'} onPress={logout} />
     </SafeAreaView>
   );
@@ -25,10 +27,13 @@ const Profile = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40,
+  },
+  text: {
+    color: 'red',
   },
 });
 
