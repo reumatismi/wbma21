@@ -5,7 +5,7 @@ import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = (props) => {
-  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
+  const {isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
   console.log('profile', isLoggedIn);
   console.log('Nimi?', user.username);
   const logout = async () => {
@@ -16,9 +16,9 @@ const Profile = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Profile</Text>
-      <Text style={styles.text}>Username: {user.username}</Text>
-      <Text style={styles.text}>Full name: {user.full_name}</Text>
-      <Text style={styles.text}>Email: {user.email}</Text>
+      <Text style={styles.text}>{user.username}</Text>
+      <Text style={styles.text}>{user.full_name}</Text>
+      <Text style={styles.text}>{user.email}</Text>
       <Button title={'Logout'} onPress={logout} />
     </SafeAreaView>
   );
