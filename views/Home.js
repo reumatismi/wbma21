@@ -1,22 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Platform,
-  StatusBar,
-  Text,
-} from 'react-native';
+import {StyleSheet, SafeAreaView, Platform, StatusBar} from 'react-native';
 import List from '../components/List';
 
 const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.androidSafeArea}>
-      <View style={styles.container}>
-        <Text>Kakkapylly</Text>
-        <List navigation={navigation} />
-      </View>
+      <List navigation={navigation} />
       <StatusBar style="auto" />
     </SafeAreaView>
   );

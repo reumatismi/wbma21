@@ -1,17 +1,18 @@
 import React, {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
-import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Button, Image, Text} from 'react-native-elements';
 
 const Profile = (props) => {
   const {isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
   console.log('profile', isLoggedIn);
   console.log('Nimi?', user.username);
   const logout = async () => {
-    setIsLoggedIn(false);
     await AsyncStorage.clear();
-    props.navigation.navigate('Login');
+    setIsLoggedIn(false);
+    // props.navigation.navigate('Login');
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'red',
+    fontSize: 12,
   },
 });
 

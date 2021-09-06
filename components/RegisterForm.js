@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
-import {View, Button, Alert} from 'react-native';
+import {View, Alert} from 'react-native';
+import {Button} from 'react-native-elements';
 import FormTextInput from './FormTextInput';
 import useSignUpForm from '../hooks/RegisterHooks';
 import {MainContext} from '../contexts/MainContext';
@@ -8,7 +9,6 @@ import {useLogin, register} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterForm = ({navigation}) => {
-
   const {setUser, user, setIsLoggedIn} = useContext(MainContext);
 
   const {login} = useLogin();
@@ -24,7 +24,6 @@ const RegisterForm = ({navigation}) => {
         Alert.alert(loginServerResponse.message);
         await AsyncStorage.setItem('userToken', loginServerResponse.token);
         setUser(loginServerResponse.user);
-        console.log('user is: ', user);
         setIsLoggedIn(true);
       } else {
         Alert.alert('Login failed');
@@ -59,7 +58,7 @@ const RegisterForm = ({navigation}) => {
         placeholder="full name"
         onChangeText={(txt) => handleInputChange('full_name', txt)}
       />
-      <Button title="Register!" onPress={doRegister} />
+      <Button raised title="Register!" onPress={doRegister} />
     </View>
   );
 };

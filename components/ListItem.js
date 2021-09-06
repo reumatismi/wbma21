@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {uploadsUrl} from '../utils/variables';
+import {
+  ListItem as NBListItem,
+  Button,
+  Image,
+  Text,
+  Divider,
+  Icon,
+} from 'react-native-elements';
+import {ActivityIndicator} from 'react-native';
 
 const ListItem = ({singleMedia, navigation}) => {
   /*
@@ -17,60 +19,41 @@ const ListItem = ({singleMedia, navigation}) => {
   }
   */
   return (
-    <TouchableOpacity
-      style={styles.row}
-      onPress={() => {
-        navigation.navigate('Single', singleMedia);
-      }}
-    >
-      <View style={styles.imagebox}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: uploadsUrl + singleMedia.thumbnails?.w160,
+    <View>
+      <NBListItem>
+        <View>
+          <Image
+            style={styles.image}
+            PlaceholderContent={<ActivityIndicator />}
+            source={{
+              uri: uploadsUrl + singleMedia.thumbnails?.w160,
+            }}
+          />
+        </View>
+        <View style={styles.textbox}>
+          <Text h4>{singleMedia.title}</Text>
+          <Text h5>{singleMedia.description}</Text>
+        </View>
+        <Button
+          title="View"
+          onPress={() => {
+            navigation.navigate('Single', singleMedia);
           }}
         />
-      </View>
-      <View style={styles.textbox}>
-        <Text style={styles.listtitle}>{singleMedia.title}</Text>
-        <Text>{singleMedia.description}</Text>
-      </View>
-    </TouchableOpacity>
+      </NBListItem>
+      <Divider></Divider>
+    </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-  droidSafeArea: {
-    flex: 1,
-    backgroundColor: '#ccc',
-    paddingTop: Platform.OS === 'android' ? 25 : 0,
-  },
-  row: {
-    flexDirection: 'row',
-    padding: 15,
-    marginBottom: 5,
-    backgroundColor: 'pink',
-    borderRadius: 0,
-    flex: 1,
-  },
-  imagebox: {
-    flex: 1,
-  },
   textbox: {
     flex: 2,
-    padding: 10,
   },
   image: {
     flex: 1,
     borderRadius: 3,
-  },
-  listtitle: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    paddingBottom: 15,
+    width: 100,
+    height: 100,
   },
 });
 

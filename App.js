@@ -1,13 +1,15 @@
 import React from 'react';
 import Navigator from './navigators/Navigators';
 import {MainProvider} from './contexts/MainContext';
-import {KeyboardAvoidingView} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const App = () => {
   return (
-    <MainProvider>
-      <Navigator />
-    </MainProvider>
+    <SafeAreaProvider>
+      <MainProvider>
+        <Navigator />
+      </MainProvider>
+    </SafeAreaProvider>
   );
 };
 
