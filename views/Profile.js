@@ -1,17 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, ActivityIndicator} from 'react-native';
+import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Button, Image, Text} from 'react-native-elements';
+import {Card, ListItem} from 'react-native-elements';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
+import {Avatar} from 'react-native-elements/dist/avatar/Avatar';
 
 const Profile = (props) => {
   const {isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
   const [avatar, setAvatar] = useState('https://placekitten.com/400/400');
   console.log('profile', isLoggedIn);
-  console.log('Nimi?', user.username);
+  console.log('Nimi?', user.fullname);
 
   const {getFilesByTag} = useTag();
 
@@ -28,30 +29,38 @@ const Profile = (props) => {
     setIsLoggedIn(false);
     // props.navigation.navigate('Login');
   };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Profile</Text>
-      <Image source={{uri: avatar}} style={{width: 300, height: 300}} />
-      <Text style={styles.text}>{user.username}</Text>
-      <Text style={styles.text}>{user.full_name}</Text>
-      <Text style={styles.text}>{user.email}</Text>
-      <Button title={'Logout'} onPress={logout} />
-    </SafeAreaView>
+    <Card>
+      <Card.Title>
+        <Text h1>{user.username}</Text>
+      </Card.Title>
+      <Card.Image
+        source={{uri: avatar}}
+        style={styles.image}
+        PlaceholderContent={<ActivityIndicator />}
+      />
+      <ListItem>
+        <Avatar icon={{name: 'email', color: 'black'}} />
+        <Text>{user.email}</Text>
+      </ListItem>
+      <ListItem>
+        <Avatar icon={{name: 'user', type: 'font-awesome', color: 'black'}} />
+        <Text>{user.full_name}</Text>
+      </ListItem>
+      <ListItem bottomDivider onPress={logout}>
+        <Avatar icon={{name: 'logout', color: 'black'}} />
+        <ListItem.Content>
+          <ListItem.Title>Logout</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'pink',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-  text: {
-    color: 'red',
-    fontSize: 12,
-  },
+  image: {width: '100%', height: undefined, aspectRatio: 1},
 });
 
 Profile.propTypes = {
