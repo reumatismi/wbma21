@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Text, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, ActivityIndicator, ScrollView} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Card, ListItem} from 'react-native-elements';
@@ -31,31 +31,33 @@ const Profile = (props) => {
   };
 
   return (
-    <Card>
-      <Card.Title>
-        <Text h1>{user.username}</Text>
-      </Card.Title>
-      <Card.Image
-        source={{uri: avatar}}
-        style={styles.image}
-        PlaceholderContent={<ActivityIndicator />}
-      />
-      <ListItem>
-        <Avatar icon={{name: 'email', color: 'black'}} />
-        <Text>{user.email}</Text>
-      </ListItem>
-      <ListItem>
-        <Avatar icon={{name: 'user', type: 'font-awesome', color: 'black'}} />
-        <Text>{user.full_name}</Text>
-      </ListItem>
-      <ListItem bottomDivider onPress={logout}>
-        <Avatar icon={{name: 'logout', color: 'black'}} />
-        <ListItem.Content>
-          <ListItem.Title>Logout</ListItem.Title>
-        </ListItem.Content>
-        <ListItem.Chevron />
-      </ListItem>
-    </Card>
+    <ScrollView>
+      <Card>
+        <Card.Title>
+          <Text h1>{user.username}</Text>
+        </Card.Title>
+        <Card.Image
+          source={{uri: avatar}}
+          style={styles.image}
+          PlaceholderContent={<ActivityIndicator />}
+        />
+        <ListItem>
+          <Avatar icon={{name: 'email', color: 'black'}} />
+          <Text>{user.email}</Text>
+        </ListItem>
+        <ListItem>
+          <Avatar icon={{name: 'user', type: 'font-awesome', color: 'black'}} />
+          <Text>{user.full_name}</Text>
+        </ListItem>
+        <ListItem bottomDivider onPress={logout}>
+          <Avatar icon={{name: 'logout', color: 'black'}} />
+          <ListItem.Content>
+            <ListItem.Title>Logout</ListItem.Title>
+          </ListItem.Content>
+          <ListItem.Chevron />
+        </ListItem>
+      </Card>
+    </ScrollView>
   );
 };
 

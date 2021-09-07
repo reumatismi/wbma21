@@ -83,13 +83,24 @@ const useUser = () => {
       },
     };
     try {
-      const userInfo = doFetch(baseUrl + 'users/user', options);
+      const userInfo = await doFetch(baseUrl + 'users/user', options);
       return userInfo;
     } catch (error) {
       console.log('checkToken error ', error);
     }
   };
-  return {checkToken};
+  const checkUsernameAvailable = async (username) => {
+    try {
+      const userNameInfo = await doFetch(
+        baseUrl + 'users/username/' + username
+      );
+      return userNameInfo.available;
+    } catch (error) {
+      console.log('checkToken error ', error);
+    }
+  };
+
+  return {checkToken, checkUsernameAvailable};
 };
 
 const useTag = () => {
@@ -98,11 +109,10 @@ const useTag = () => {
       const tiedosto = await doFetch(baseUrl + 'tags/' + tag);
       return tiedosto;
     } catch (e) {
-      console.log('getFilesByTag', e.message);
+      console.log('getFilesBytag', e.message);
       return {};
     }
   };
-
   return {getFilesByTag};
 };
 

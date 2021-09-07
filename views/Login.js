@@ -1,5 +1,5 @@
-import React, {useEffect, useContext} from 'react';
-import {StyleSheet, Text, KeyboardAvoidingView, Platform} from 'react-native';
+import React, {useEffect, useContext, useState} from 'react';
+import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,11 +7,13 @@ import {useUser} from '../hooks/ApiHooks';
 import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
 import {baseUrl} from '../utils/variables';
+import {Text, Button} from 'react-native-elements';
 
 const Login = ({navigation}) => {
-  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
-
+  const {setUser, setIsLoggedIn} = useContext(MainContext);
   const {checkToken} = useUser();
+  const [registerFormToggle, setRegisterFormToggle] = useState(true);
+  const [buttonTitleToggle, setTitleFormToggle] = useState(true);
 
   const getToken = async () => {
     try {
@@ -43,9 +45,21 @@ const Login = ({navigation}) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <Text>Login</Text>
-      <LoginForm navigation={navigation} />
-      <RegisterForm navigation={navigation} />
+      {registerFormToggle ? (
+        <LoginForm navigation={navigation} />
+      ) : (
+        <RegisterForm navigation={navigation} />
+      )}
+      <Button
+        title="{
+          registerFormToggle
+            ? 'No acccount? Kick my ass!'
+            :
+        }"
+        onPress={() => {
+          setRegisterFormToggle(!registerFormToggle);
+        }}
+      ></Button>
     </KeyboardAvoidingView>
   );
 };

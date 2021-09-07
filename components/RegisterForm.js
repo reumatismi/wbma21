@@ -1,16 +1,17 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {View, Alert} from 'react-native';
-import {Button} from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
 import FormTextInput from './FormTextInput';
 import useSignUpForm from '../hooks/RegisterHooks';
 import {MainContext} from '../contexts/MainContext';
-import {useLogin, register} from '../hooks/ApiHooks';
+import {useLogin, login, register} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const RegisterForm = ({navigation}) => {
-  const {setUser, user, setIsLoggedIn} = useContext(MainContext);
+const RegisterForm = () => {
+  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
 
+  // lisäsin itse
   const {login} = useLogin();
 
   const doRegister = async () => {
@@ -18,12 +19,16 @@ const RegisterForm = ({navigation}) => {
     if (serverResponse) {
       Alert.alert(serverResponse.message);
 
+      // originally was: await useLogin(inputs);
+
       const loginServerResponse = await login(JSON.stringify(inputs));
+      // const loginServerResponse = await login(inputs);
 
       if (loginServerResponse) {
         Alert.alert(loginServerResponse.message);
         await AsyncStorage.setItem('userToken', loginServerResponse.token);
         setUser(loginServerResponse.user);
+        console.log('user is: ', user);
         setIsLoggedIn(true);
       } else {
         Alert.alert('Login failed');
@@ -33,14 +38,23 @@ const RegisterForm = ({navigation}) => {
     }
   };
 
-  const {inputs, handleInputChange} = useSignUpForm();
+  const {inputs, handleInputChange, checkUsername} = useSignUpForm();
 
   return (
     <View>
+      <Text h4>Register:</Text>
+      <Text h4></Text>
       <FormTextInput
         autoCapitalize="none"
         placeholder="username"
         onChangeText={(txt) => handleInputChange('username', txt)}
+        onEndEditing={(event) => {
+          console.log('onendediting value', event.nativeEvent.text);
+          checkUsername(event.nativeEvent.text);
+          if (!checkUsername(event.nativeEvent.text)) {
+            Alert.alert('Fuck You!');
+          }
+        }}
       />
       <FormTextInput
         autoCapitalize="none"
@@ -58,7 +72,7 @@ const RegisterForm = ({navigation}) => {
         placeholder="full name"
         onChangeText={(txt) => handleInputChange('full_name', txt)}
       />
-      <Button raised title="Register!" onPress={doRegister} />
+      <Button title="Register!" onPress={doRegister} raised />
     </View>
   );
 };
