@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginForm = ({navigation}) => {
   const {inputs, handleInputChange} = useLoginForm();
-  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
+  const {setUser, setIsLoggedIn} = useContext(MainContext);
   const {login} = useLogin();
 
   const doLogin = async () => {

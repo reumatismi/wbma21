@@ -8,16 +8,10 @@ import {
   Image,
   Text,
   Divider,
-  Icon,
 } from 'react-native-elements';
 import {ActivityIndicator} from 'react-native';
 
 const ListItem = ({singleMedia, navigation}) => {
-  /*
-  if (singleMedia.thumbnails === undefined) {
-    singleMedia.thumbnails = {w160: 'jokuoosote'};
-  }
-  */
   return (
     <View>
       <NBListItem>

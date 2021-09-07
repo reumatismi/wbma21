@@ -51,11 +51,11 @@ const Login = ({navigation}) => {
         <RegisterForm navigation={navigation} />
       )}
       <Button
-        title="{
+        title={
           registerFormToggle
             ? 'No acccount? Kick my ass!'
-            :
-        }"
+            : 'Herbivore muthafucka!'
+        }
         onPress={() => {
           setRegisterFormToggle(!registerFormToggle);
         }}

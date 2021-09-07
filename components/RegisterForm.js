@@ -5,11 +5,12 @@ import {Button, Text} from 'react-native-elements';
 import FormTextInput from './FormTextInput';
 import useSignUpForm from '../hooks/RegisterHooks';
 import {MainContext} from '../contexts/MainContext';
-import {useLogin, login, register} from '../hooks/ApiHooks';
+import {useLogin, register} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterForm = () => {
-  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
+  const {setUser, user, setIsLoggedIn} = useContext(MainContext);
+  const {inputs, errors, handleInputChange, checkUsername} = useSignUpForm();
 
   // lisäsin itse
   const {login} = useLogin();
@@ -19,10 +20,7 @@ const RegisterForm = () => {
     if (serverResponse) {
       Alert.alert(serverResponse.message);
 
-      // originally was: await useLogin(inputs);
-
       const loginServerResponse = await login(JSON.stringify(inputs));
-      // const loginServerResponse = await login(inputs);
 
       if (loginServerResponse) {
         Alert.alert(loginServerResponse.message);
@@ -38,8 +36,6 @@ const RegisterForm = () => {
     }
   };
 
-  const {inputs, handleInputChange, checkUsername} = useSignUpForm();
-
   return (
     <View>
       <Text h4>Register:</Text>
@@ -51,10 +47,8 @@ const RegisterForm = () => {
         onEndEditing={(event) => {
           console.log('onendediting value', event.nativeEvent.text);
           checkUsername(event.nativeEvent.text);
-          if (!checkUsername(event.nativeEvent.text)) {
-            Alert.alert('Fuck You!');
-          }
         }}
+        errorMessage={errors.username}
       />
       <FormTextInput
         autoCapitalize="none"
