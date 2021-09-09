@@ -1,5 +1,41 @@
 import {useState} from 'react';
 import {useUser} from './ApiHooks';
+import {validator} from '../utils/validator';
+
+const constraints = {
+  username: {
+    presence: true,
+    length: {
+      minimum: 3,
+      message: 'must be at least 3 chars',
+    },
+  },
+  password: {
+    presence: true,
+    length: {
+      minimum: 6,
+      message: 'must be at least 6 characters',
+    },
+  },
+  confirmPassword: {
+    equality: {
+      attribute: 'password',
+      message: '^ passwords do not match',
+    },
+  },
+  email: {
+    presence: true,
+    email: {
+      message: 'must be a valid email address',
+    },
+  },
+  full_name: {
+    length: {
+      minimum: 3,
+      message: 'must be at least 3 chars',
+    },
+  },
+};
 
 const useSignUpForm = (callback) => {
   const {checkUsernameAvailable} = useUser();
@@ -20,26 +56,44 @@ const useSignUpForm = (callback) => {
       };
     });
   };
+
+  const handleOnEndEditing = (name, text) => {
+    // validate input value
+    let error;
+    if (name === 'confirmPassword') {
+      error = validator(
+        name,
+        {password: inputs.password, confirmPassword: text},
+        constraints
+      );
+    } else {
+      error = validator(name, text, constraints);
+    }
+    // update errors state
+    setErrors((errors) => {
+      return {
+        ...errors,
+        [name]: error,
+      };
+    });
+  };
+
   const checkUsername = async (username) => {
-    // TODO: add check username functionality to Api hooks and use it
+    // TODO: add check username functionality to API hooks and use it
     if (username.length < 3) {
       return;
     }
-    // add error to input element if username is reserved
     try {
+      // add error to Input element if username is reserved
       const isAvailable = await checkUsernameAvailable(username);
       console.log('checkUsername available', isAvailable);
       if (!isAvailable) {
         setErrors((errors) => {
-          return {...errors, username: 'Username already in use'};
-        });
-      } else {
-        setErrors((errors) => {
-          return {...errors, username: ''};
+          return {...errors, username: 'Username already exists'};
         });
       }
-    } catch (e) {
-      console.log('checkUserName check ', e);
+    } catch (error) {
+      console.log('username check failed', error);
     }
   };
 
@@ -48,6 +102,7 @@ const useSignUpForm = (callback) => {
     inputs,
     errors,
     checkUsername,
+    handleOnEndEditing,
   };
 };
 

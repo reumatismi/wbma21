@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Text, ActivityIndicator, ScrollView} from 'react-native';
+import {StyleSheet, ActivityIndicator, ScrollView} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Card, ListItem} from 'react-native-elements';
+import {Card, ListItem, Text} from 'react-native-elements';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
 import {Avatar} from 'react-native-elements/dist/avatar/Avatar';
