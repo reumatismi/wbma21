@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
@@ -6,33 +6,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
-import {baseUrl} from '../utils/variables';
-import {Text, Button} from 'react-native-elements';
+import {ImageBackground} from 'react-native';
+import {Card, ListItem, Text} from 'react-native-elements';
 
 const Login = ({navigation}) => {
-  const {setUser, setIsLoggedIn} = useContext(MainContext);
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {checkToken} = useUser();
-  const [registerFormToggle, setRegisterFormToggle] = useState(true);
-  const [buttonTitleToggle, setTitleFormToggle] = useState(true);
+  const [registerFormToggle, setRegisterFormToggle] = useState(false);
+  // console.log('Login isLoggedIn', isLoggedIn);
 
   const getToken = async () => {
-    try {
-      const userToken = await AsyncStorage.getItem('userToken');
-      const response = await fetch(baseUrl + 'users/user', {
-        method: 'GET',
-        headers: {
-          'x-access-token': userToken,
-        },
-      });
-      const json = await response.json();
-      if (response.ok) {
-        setUser(json);
+    const userToken = await AsyncStorage.getItem('userToken');
+    console.log('logIn asyncstorage token:', userToken);
+    if (userToken) {
+      const userInfo = await checkToken(userToken);
+      if (userInfo.user_id) {
+        setUser(userInfo);
         setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
       }
-    } catch (e) {
-      console.log('error on token', e);
     }
   };
 
@@ -45,21 +36,38 @@ const Login = ({navigation}) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      {registerFormToggle ? (
-        <LoginForm navigation={navigation} />
-      ) : (
-        <RegisterForm navigation={navigation} />
-      )}
-      <Button
-        title={
-          registerFormToggle
-            ? 'No acccount? Kick my ass!'
-            : 'Herbivore muthafucka!'
-        }
-        onPress={() => {
-          setRegisterFormToggle(!registerFormToggle);
-        }}
-      ></Button>
+      <ImageBackground
+        source={require('../assets/splash.png')}
+        style={styles.image}
+      >
+        {registerFormToggle ? (
+          <Card>
+            <Card.Divider />
+            <Card.Title h4>Register</Card.Title>
+            <RegisterForm navigation={navigation} />
+          </Card>
+        ) : (
+          <Card>
+            <Card.Title h4>Login</Card.Title>
+            <LoginForm navigation={navigation} />
+          </Card>
+        )}
+        {/* TODO: add link/button & event handler to change state: setRegformtoggle(!regformtoggle);  */}
+        <ListItem
+          onPress={() => {
+            setRegisterFormToggle(!registerFormToggle);
+          }}
+        >
+          <ListItem.Content>
+            <Text style={styles.text}>
+              {registerFormToggle
+                ? 'Already registered? Login here'
+                : 'No account? Register here.'}
+            </Text>
+          </ListItem.Content>
+          <ListItem.Chevron />
+        </ListItem>
+      </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
@@ -68,6 +76,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
 });
 
