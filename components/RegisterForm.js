@@ -15,6 +15,7 @@ const RegisterForm = () => {
   const {login} = useLogin();
 
   const doRegister = async () => {
+    delete inputs.confirmPassword;
     const serverResponse = await register(inputs);
     if (serverResponse) {
       Alert.alert(serverResponse.message);
