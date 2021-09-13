@@ -7,6 +7,7 @@ import Home from '../views/Home';
 import Profile from '../views/Profile';
 import Single from '../views/Single';
 import Login from '../views/Login';
+import Upload from '../views/Upload';
 import {MainContext} from '../contexts/MainContext';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Icon} from 'react-native-elements';
@@ -28,6 +29,9 @@ const TabScreen = () => {
             case 'Profile':
               iconName = 'beer';
               break;
+            case 'Upload':
+              iconName = 'flower';
+              break;
           }
           return (
             <Icon name={iconName} size={size} color={color} type="ionicon" />
@@ -37,6 +41,7 @@ const TabScreen = () => {
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Upload" component={Upload} />
     </Tab.Navigator>
   );
 };

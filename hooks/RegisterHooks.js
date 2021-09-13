@@ -48,6 +48,7 @@ const useSignUpForm = (callback) => {
 
   const [errors, setErrors] = useState({});
 
+  // voisi olla omassa hookissa FormHooks
   const handleInputChange = (name, text) => {
     setInputs((inputs) => {
       return {
