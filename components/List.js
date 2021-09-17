@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 
 const List = ({navigation}) => {
   const {mediaArray} = useMedia();
-  console.log('List.js - List: mediaArray', mediaArray);
+  // console.log('List.js - List: mediaArray', mediaArray);
   return (
     <FlatList
-      data={mediaArray}
+      data={mediaArray.reverse()}
       renderItem={({item}) => (
         <ListItem navigation={navigation} singleMedia={item} />
       )}
