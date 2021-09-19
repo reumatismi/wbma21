@@ -46,7 +46,7 @@ const Upload = ({navigation}) => {
               text: 'Ok',
               onPress: () => {
                 setUpdate(update + 1);
-                setImage({uri: '../assets/icon.png'});
+                setImage({uri: undefined});
                 handleReset();
                 navigation.navigate('Home');
               },
@@ -105,7 +105,7 @@ const Upload = ({navigation}) => {
       <Button
         title={'Reset'}
         onPress={() => {
-          setImage({uri: '../assets/icon.png'});
+          setImage({uri: undefined});
           handleReset();
         }}
       />
