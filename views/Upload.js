@@ -13,7 +13,8 @@ import {MainContext} from '../contexts/MainContext';
 
 const Upload = ({navigation}) => {
   const [image, setImage] = useState(require('../assets/icon.png'));
-  const {inputs, handleInputChange} = useUploadForm();
+  const {inputs, handleInputChange, handleReset, errors, handleOnEndEditing} =
+    useUploadForm();
   const {uploadMedia, loading} = useMedia();
   const {addTag} = useTag();
   const {update, setUpdate} = useContext(MainContext);
@@ -32,7 +33,7 @@ const Upload = ({navigation}) => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
       // console.log('doUpload', formData);
-      const result = await uploadMedia(formData, userToken); // kosahtaa tässä
+      const result = await uploadMedia(formData, userToken);
       // console.log('doUpload', result);
       const tagResult = await addTag(result.file_id, appID, userToken);
       // console.log('doUpload addTag', tagResult);
@@ -45,6 +46,8 @@ const Upload = ({navigation}) => {
               text: 'Ok',
               onPress: () => {
                 setUpdate(update + 1);
+                setImage({uri: '../assets/icon.png'});
+                handleReset();
                 navigation.navigate('Home');
               },
             },
@@ -77,7 +80,7 @@ const Upload = ({navigation}) => {
       quality: 0.5,
     });
 
-    console.log(result);
+    console.log('pickImage ', result);
 
     if (!result.cancelled) {
       setImage({uri: result.uri});
@@ -92,9 +95,20 @@ const Upload = ({navigation}) => {
         title="Upload"
         handleSubmit={doUpload}
         handleInputChange={handleInputChange}
+        handleOnEndEditing={handleOnEndEditing}
+        errors={errors}
         loading={loading}
+        imageState={image}
+        inputs={inputs}
       />
       {loading && <ActivityIndicator />}
+      <Button
+        title={'Reset'}
+        onPress={() => {
+          setImage({uri: '../assets/icon.png'});
+          handleReset();
+        }}
+      />
     </View>
   );
 };
