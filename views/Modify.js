@@ -2,12 +2,11 @@ import React, {useContext, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {View, ActivityIndicator, Alert} from 'react-native';
 import UploadForm from '../components/UploadForm';
-import {Button, Image} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import useUploadForm from '../hooks/UploadHooks';
 import {useMedia} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainContext} from '../contexts/MainContext';
-import placeHolderImage from '../assets/icon.png';
 
 const Modify = ({route}) => {
   const navigation = route.params.navigation;
@@ -20,10 +19,8 @@ const Modify = ({route}) => {
     errors,
     handleOnEndEditing,
   } = useUploadForm();
-  const {modifydMedia, loading} = useMedia();
+  const {modifyMedia, loading} = useMedia();
   const {update, setUpdate} = useContext(MainContext);
-
-  const placeHolderUri = Image.resolveAssetSource(placeHolderImage).uri;
 
   useEffect(() => {
     (() => {
@@ -34,14 +31,18 @@ const Modify = ({route}) => {
     })();
   }, []);
 
-  const doUpload = async () => {
+  const doModify = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
       // console.log('doUpload', formData);
-      const result = await modifyMedia(inputs, userToken);
+      const result = await modifyMedia(
+        inputs,
+        userToken,
+        route.params.singleMedia.file_id
+      );
       if (result.message) {
         Alert.alert(
-          'Upload',
+          'Modify',
           result.message,
           [
             {
@@ -49,7 +50,7 @@ const Modify = ({route}) => {
               onPress: () => {
                 setUpdate(update + 1);
                 handleReset();
-                navigation.navigate('Home');
+                navigation.navigate('My Files');
               },
             },
           ],
@@ -64,21 +65,14 @@ const Modify = ({route}) => {
   return (
     <View>
       <UploadForm
-        title="Upload"
-        handleSubmit={doUpload}
+        title="Modify"
+        handleSubmit={doModify}
         handleInputChange={handleInputChange}
         handleOnEndEditing={handleOnEndEditing}
         errors={errors}
         loading={loading}
         inputs={inputs}
-      />
-      {loading && <ActivityIndicator />}
-      <Button
-        title={'Reset'}
-        onPress={() => {
-          setImage({uri: placeHolderUri});
-          handleReset();
-        }}
+        imageState={{uri: ''}}
       />
     </View>
   );

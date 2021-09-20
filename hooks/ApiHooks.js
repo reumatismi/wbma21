@@ -88,6 +88,28 @@ const useMedia = (ownFiles = true) => {
     }
   };
 
+  const modifyMedia = async (data, token, id) => {
+    console.log('uploadMedia', data);
+    try {
+      setLoading(true);
+      const options = {
+        method: 'PUT',
+        headers: {
+          'x-access-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      const result = await doFetch(baseUrl + 'media/' + id, options);
+      return result;
+    } catch (e) {
+      console.log('modifyMedia error', e);
+      throw new Error(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     mediaArray,
     loading,
@@ -95,6 +117,7 @@ const useMedia = (ownFiles = true) => {
     loadSingleMedia,
     uploadMedia,
     deleteMedia,
+    modifyMedia,
   };
 };
 
