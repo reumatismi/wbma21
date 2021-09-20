@@ -103,7 +103,7 @@ const Xylophone = ({route}) => {
           style={[styles.button, {backgroundColor: NoteThree}]}
           onPress={() => handlePlaySound('three')}
         >
-          <Text style={styles.buttonText}>Note 3</Text>
+          <Text style={[styles.buttonText, {color: 'black'}]}>Note 3</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
