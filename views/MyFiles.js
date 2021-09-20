@@ -1,11 +1,11 @@
 import React from 'react';
-import {FlatList} from 'react-native';
-import {useMedia} from '../hooks/ApiHooks';
-import ListItem from './ListItem';
 import PropTypes from 'prop-types';
+import {FlatList} from 'react-native';
+import ListItem from '../components/ListItem';
+import {useMedia} from '../hooks/ApiHooks';
 
-const List = ({navigation}) => {
-  const {mediaArray} = useMedia();
+const MyFiles = ({navigation}) => {
+  const {mediaArray} = useMedia(true);
   // console.log('List.js - List: mediaArray', mediaArray);
   return (
     <FlatList
@@ -14,7 +14,7 @@ const List = ({navigation}) => {
         <ListItem
           navigation={navigation}
           singleMedia={item}
-          showButtons={false}
+          showButtons={true}
         />
       )}
       keyExtractor={(item, index) => index.toString()}
@@ -22,8 +22,8 @@ const List = ({navigation}) => {
   );
 };
 
-List.propTypes = {
+MyFiles.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
 
-export default List;
+export default MyFiles;

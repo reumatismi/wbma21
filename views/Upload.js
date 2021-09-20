@@ -10,6 +10,7 @@ import {useMedia, useTag} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {appID} from '../utils/variables';
 import {MainContext} from '../contexts/MainContext';
+import placeHolderImage from '../assets/icon.png';
 
 const Upload = ({navigation}) => {
   const [image, setImage] = useState(require('../assets/icon.png'));
@@ -18,6 +19,8 @@ const Upload = ({navigation}) => {
   const {uploadMedia, loading} = useMedia();
   const {addTag} = useTag();
   const {update, setUpdate} = useContext(MainContext);
+
+  const placeHolderUri = Image.resolveAssetSource(placeHolderImage).uri;
 
   const doUpload = async () => {
     const filename = image.uri.split('/').pop();
@@ -46,7 +49,7 @@ const Upload = ({navigation}) => {
               text: 'Ok',
               onPress: () => {
                 setUpdate(update + 1);
-                setImage({uri: undefined});
+                setImage({uri: placeHolderUri});
                 handleReset();
                 navigation.navigate('Home');
               },
@@ -105,7 +108,7 @@ const Upload = ({navigation}) => {
       <Button
         title={'Reset'}
         onPress={() => {
-          setImage({uri: undefined});
+          setImage({uri: placeHolderUri});
           handleReset();
         }}
       />
