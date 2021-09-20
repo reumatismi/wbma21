@@ -13,6 +13,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Icon} from 'react-native-elements';
 import MyFiles from '../views/MyFiles';
 import Modify from '../views/Modify';
+import Xylophone from '../views/Xylophone';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,9 @@ const TabScreen = () => {
             case 'Upload':
               iconName = 'flower';
               break;
+            case 'Xylophone':
+              iconName = 'cog';
+              break;
           }
           return (
             <Icon name={iconName} size={size} color={color} type="ionicon" />
@@ -44,6 +48,7 @@ const TabScreen = () => {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Upload" component={Upload} />
+      <Tab.Screen name="Xylophone" component={Xylophone} />
     </Tab.Navigator>
   );
 };

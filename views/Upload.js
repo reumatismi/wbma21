@@ -101,7 +101,6 @@ const Upload = ({navigation}) => {
         imageState={image}
         inputs={inputs}
       />
-      {loading && <ActivityIndicator />}
       <Button
         title={'Reset'}
         onPress={() => {
