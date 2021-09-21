@@ -3,7 +3,7 @@ import {MainContext} from '../contexts/MainContext';
 import {doFetch} from '../utils/http';
 import {appID, baseUrl} from '../utils/variables';
 
-const useMedia = (ownFiles = true) => {
+const useMedia = (ownFiles) => {
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const {update, user} = useContext(MainContext);
@@ -48,7 +48,7 @@ const useMedia = (ownFiles = true) => {
   };
 
   const uploadMedia = async (formData, token) => {
-    console.log('uploadMedia', formData);
+    // console.log('uploadMedia', formData);
     try {
       setLoading(true);
       const options = {
@@ -153,6 +153,19 @@ const useUser = () => {
     }
   };
 
+  const getUserInfo = async (userid, token) => {
+    const options = {
+      method: 'GET',
+      headers: {'x-access-token': token},
+    };
+    try {
+      const userInfo = await doFetch(baseUrl + 'users/' + userid, options);
+      return userInfo;
+    } catch (e) {
+      console.log('getUser error', e);
+    }
+  };
+
   const checkUsernameAvailable = async (username) => {
     try {
       const usernameInfo = await doFetch(
@@ -180,7 +193,7 @@ const useUser = () => {
     }
   };
 
-  return {checkToken, register, checkUsernameAvailable};
+  return {checkToken, register, checkUsernameAvailable, getUserInfo};
 };
 
 const useTag = () => {
