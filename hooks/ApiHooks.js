@@ -11,8 +11,13 @@ const useMedia = (ownFiles) => {
   useEffect(() => {
     // https://scriptverse.academy/tutorials/js-self-invoking-functions.html
     (async () => {
-      setMediaArray(await loadMedia());
-      // console.log('useMedia useEffect', mediaArray);
+      try {
+        const allMedia = await loadMedia();
+        allMedia.reverse();
+        setMediaArray(allMedia);
+      } catch (e) {
+        console.log('useMedia useEffect error', e.message);
+      }
     })();
   }, [update]);
 
@@ -156,13 +161,15 @@ const useUser = () => {
   const getUserInfo = async (userid, token) => {
     const options = {
       method: 'GET',
-      headers: {'x-access-token': token},
+      headers: {
+        'x-access-token': token,
+      },
     };
     try {
       const userInfo = await doFetch(baseUrl + 'users/' + userid, options);
       return userInfo;
-    } catch (e) {
-      console.log('getUser error', e);
+    } catch (error) {
+      console.log('checkToken error ', error);
     }
   };
 
@@ -230,4 +237,27 @@ const useTag = () => {
   return {getFilesByTag, addTag};
 };
 
-export {useMedia, useLogin, useUser, useTag};
+const useFavourites = () => {
+  const addFavourite = async (fileId, token) => {
+    // post /favourites
+  };
+  const getFavouritesByFileID = async (fileId, token) => {
+    // get /favourites/file/:id
+  };
+
+  const deleteFavourite = async (fileId, token) => {
+    // delete /favourites/file/:id
+  };
+
+  const getMyFavourites = async (token) => {
+    // get /favourites
+  };
+  return {
+    addFavourite,
+    deleteFavourite,
+    getFavouritesByFileID,
+    getMyFavourites,
+  };
+};
+
+export {useMedia, useLogin, useUser, useTag, useFavourites};

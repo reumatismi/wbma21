@@ -32,7 +32,7 @@ const TabScreen = () => {
               iconName = 'beer';
               break;
             case 'Upload':
-              iconName = 'flower';
+              iconName = 'cloud-upload';
               break;
           }
           return (
